@@ -671,6 +671,11 @@ public class JSONManipulatorCurrent implements JSONManipulator{
     private Item toItem(ItemStack is) throws IllegalAccessException, InstantiationException, InvocationTargetException, NoSuchMethodException {
         CompoundTag tag = new CompoundTag("tag");
 
+        assert AS_NMS_COPY != null;
+        assert NBT_TAG_COMPOUND != null;
+        assert SAVE_NMS_ITEM_STACK_METHOD != null;
+        assert MAP != null;
+
         Object nmsStack = AS_NMS_COPY.invoke(null, is);
         Object nmsTag = NBT_TAG_COMPOUND.newInstance();
         SAVE_NMS_ITEM_STACK_METHOD.invoke(nmsStack, nmsTag);

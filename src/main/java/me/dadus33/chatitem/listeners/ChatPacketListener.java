@@ -84,7 +84,10 @@ public class ChatPacketListener extends PacketAdapter {
         }
         ItemMeta im = Bukkit.getItemFactory().getItemMeta(i.getType());
         ItemMeta original = i.getItemMeta();
+        assert im != null;
+        assert original != null;
         if(original.hasDisplayName()){
+
             im.setDisplayName(original.getDisplayName());
         }
         i.setItemMeta(im);

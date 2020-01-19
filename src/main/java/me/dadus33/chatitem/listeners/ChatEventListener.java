@@ -68,10 +68,12 @@ public class ChatEventListener implements Listener {
         return count;
     }
 
+    //We need to have lowest priority in order to get to the event before DeluxeChat or other plugins do
     @SuppressWarnings("deprecation")
-    @EventHandler(ignoreCancelled = true, priority = EventPriority.LOWEST)  //We need to have lowest priority in order to get to the event before DeluxeChat or other plugins do
+    @EventHandler(ignoreCancelled = true, priority = EventPriority.LOWEST)
     public void onChat(final AsyncPlayerChatEvent e) {
-        if(e.getMessage().indexOf(SEPARATOR)!=-1){  //If the BELL character is found, we have to remove it
+        //If the BELL character is found, we have to remove it
+        if (e.getMessage().indexOf(SEPARATOR) != -1) {
             String msg = e.getMessage().replace(Character.toString(SEPARATOR), "");
             e.setMessage(msg);
         }
@@ -144,9 +146,7 @@ public class ChatEventListener implements Listener {
         }
 
         String oldmsg = e.getMessage();
-        StringBuilder sb = new StringBuilder(oldmsg);
-        sb.append(SEPARATOR).append(e.getPlayer().getName());
-        e.setMessage(sb.toString());
+        e.setMessage(oldmsg + SEPARATOR + e.getPlayer().getName());
         Bukkit.getConsoleSender().sendMessage(String.format(e.getFormat(), e.getPlayer().getDisplayName(), oldmsg));
         if(!p.hasPermission("chatitem.ignore-cooldown")) {
             COOLDOWNS.put(p.getName(), System.currentTimeMillis() / 1000);
@@ -157,7 +157,7 @@ public class ChatEventListener implements Listener {
     @SuppressWarnings("deprecation")
     @EventHandler(priority = EventPriority.LOWEST)
     public void onCommand(final PlayerCommandPreprocessEvent e){
-        if(e.getMessage().indexOf(SEPARATOR)!=-1){  //If the BELL character is found, we have to remove it
+        if(e.getMessage().indexOf(SEPARATOR) != -1){  //If the BELL character is found, we have to remove it
             String msg = e.getMessage().replace(Character.toString(SEPARATOR), "");
             e.setMessage(msg);
         }
